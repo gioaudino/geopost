@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="login_POST" type="string">https://ewserver.di.unimi.it/mobicomp/geopost/login</string>
+    <string name="followed_GET" type="string">https://ewserver.di.unimi.it/mobicomp/geopost/followed</string>
+    <string name="users_GET" type="string">https://ewserver.di.unimi.it/mobicomp/geopost/users</string>
+</resources>
