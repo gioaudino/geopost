@@ -6,6 +6,9 @@ import android.content.SharedPreferences;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by gioaudino on 17/11/17.
  * Package com.gioaudino.geopost.Service in project GeoPost
@@ -51,5 +54,15 @@ public class Helper {
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
             }
         }
+    }
+
+    public static void replaceValues(List<String> old, List<String> values) {
+        List<String> tbr = new ArrayList<>();
+        for (String val : old)
+            if (values.contains(val)) values.remove(val);
+            else tbr.add(val);
+
+        old.removeAll(tbr);
+        old.addAll(values);
     }
 }

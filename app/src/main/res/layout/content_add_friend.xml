@@ -11,7 +11,6 @@
     tools:layout_editor_absoluteY="8dp"
     tools:showIn="@layout/activity_add_friend">
 
-
     <EditText
         android:id="@+id/username_field"
         android:layout_width="match_parent"
@@ -22,21 +21,24 @@
         android:hint="@string/username_label"
         android:inputType="textPersonName" />
 
-    <ProgressBar
-        android:id="@+id/prog_bar_fetching"
-        style="?android:attr/progressBarStyle"
+    <TextView
+        android:id="@+id/error_msg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/username_field"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp" />
+        android:layout_below="@+id/username_field"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:text="@string/error_network_fetching"
+        android:textColor="#ff0000"
+        android:textStyle="bold"
+        android:visibility="invisible" />
 
     <ListView
+        android:id="@+id/list_search_users"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/prog_bar_fetching"
+        android:layout_below="@+id/username_field"
         android:layout_marginTop="8dp" />
-
 
 </RelativeLayout>

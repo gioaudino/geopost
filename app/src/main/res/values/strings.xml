@@ -23,4 +23,5 @@
     <string name="title_activity_add_friend">Follow user</string>
     <string name="username_label">Username</string>
     <string name="add_new_friend">Add new friend</string>
+    <string name="error_network_fetching">There\'s no user with such prefix</string>
 </resources>
