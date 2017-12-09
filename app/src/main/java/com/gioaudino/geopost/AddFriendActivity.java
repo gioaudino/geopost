@@ -2,12 +2,14 @@ package com.gioaudino.geopost;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
@@ -44,7 +46,29 @@ public class AddFriendActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        ((ListView) findViewById(R.id.list_search_users)).setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, this.values));
+        ListView listView = findViewById(R.id.list_search_users);
+        listView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, this.values));
+        listView.setOnItemClickListener((adapterView, view, position, l) -> {
+            Helper.closeKeyboard(activity);
+            String username = adapterView.getItemAtPosition(position).toString();
+            StringRequest request =
+                    new StringRequest(
+                            Request.Method.GET,
+                            Helper.buildUrlToFollowFriend(
+                                    getResources().getString(R.string.follow_GET),
+                                    getSharedPreferences(Helper.PREFERENCES_NAME, MODE_PRIVATE).getString("session_id", null),
+                                    username),
+                            response -> {
+                                Snackbar.make(findViewById(R.id.layout_add_friend), "You're now following " + username, Snackbar.LENGTH_LONG).show();
+                            },
+                            error -> {
+                                Log.e("FOLLOW USER", "400: " + new String(error.networkResponse.data));
+                                Snackbar err = Snackbar.make(findViewById(R.id.layout_add_friend), Html.fromHtml(new String(error.networkResponse.data)), Snackbar.LENGTH_LONG);
+                                err.getView().setBackgroundColor(Color.parseColor("#E54A1B"));
+                                err.show();
+                            });
+            queue.add(request);
+        });
 
         EditText tView = findViewById(R.id.username_field);
         tView.addTextChangedListener(new TextWatcher() {
@@ -68,7 +92,7 @@ public class AddFriendActivity extends AppCompatActivity {
                     StringRequest request =
                             new StringRequest(
                                     Request.Method.GET,
-                                    Helper.buildUrl(
+                                    Helper.buildUrlToFetchUsernames(
                                             activity.getResources().getString(R.string.users_GET),
                                             activity.getSharedPreferences(Helper.PREFERENCES_NAME, Context.MODE_PRIVATE).getString("session_id", null),
                                             searchString,

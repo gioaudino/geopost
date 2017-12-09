@@ -22,8 +22,12 @@ public class Helper {
         return url + "?session_id=" + sessionId;
     }
 
-    public static String buildUrl(String url, String sessionId, CharSequence usernameStart, int limit) {
+    public static String buildUrlToFetchUsernames(String url, String sessionId, CharSequence usernameStart, int limit) {
         return url + "?session_id=" + sessionId + "&usernamestart=" + usernameStart + "&limit=" + limit;
+    }
+
+    public static String buildUrlToFollowFriend(String url, String sessionId, String username) {
+        return url + "?session_id=" + sessionId + "&username=" + username;
     }
 
     public static void saveData(Activity activity, String username, String password, String sessionID) {
@@ -65,4 +69,5 @@ public class Helper {
         old.removeAll(tbr);
         old.addAll(values);
     }
+
 }

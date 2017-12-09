@@ -50,8 +50,10 @@ public class Friends {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("{\n");
-        for (User friend : friends.values())
+        for (User friend : friends.values()) {
             sb.append(friend);
+            sb.append('\n');
+        }
         sb.append("\n\t}");
         return sb.toString();
     }

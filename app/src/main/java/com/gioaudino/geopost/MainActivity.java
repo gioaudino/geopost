@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
                 username,
                 password,
                 response -> {
-                    Log.d("LOGIN ACTIVITY", "REQUEST SUCCESSFUL");
+                    Log.d("LOGIN ACTIVITY", "REQUEST SUCCESSFUL - Token: " + response);
                     Helper.saveData(this, username, password, response);
                     spinner.setVisibility(View.INVISIBLE);
                     Intent intent = new Intent(this, FeedActivity.class);
