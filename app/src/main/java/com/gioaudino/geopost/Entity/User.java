@@ -14,6 +14,11 @@ public class User {
 
     private LatLng lastPosition;
 
+    private float distance;
+
+    public User() {
+    }
+
     public User(String username, String msg, LatLng lastPosition) {
         this.username = username;
         this.msg = msg;
@@ -42,6 +47,14 @@ public class User {
 
     public void setLastPosition(LatLng lastPosition) {
         this.lastPosition = lastPosition;
+    }
+
+    public float getDistance() {
+        return distance;
+    }
+
+    public void setDistance(float distance) {
+        this.distance = distance;
     }
 
     @Override

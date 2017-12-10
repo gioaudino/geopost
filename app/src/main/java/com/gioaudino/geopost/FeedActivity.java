@@ -31,8 +31,11 @@ public class FeedActivity extends AppCompatActivity {
                 response -> {
                     Followed f = new Gson().fromJson(response, Followed.class);
                     Friends.getInstance().mergeUsers(f);
+
                     Log.d("FOLLOWED REQUEST", "REQUEST SUCCESSFUL");
                     Log.d("FOLLOWED", Friends.getInstance().toString());
+
+
                 },
                 error -> {
                     Log.e("FOLLOWED REQUEST", "REQUEST FAILED");

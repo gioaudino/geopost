@@ -42,7 +42,8 @@ public class UserAdapter extends ArrayAdapter<User> {
             TextView tt1 = v.findViewById(R.id.line1);
             TextView tt2 = v.findViewById(R.id.line2);
             tt1.setText(user.getUsername());
-            tt2.setText(user.getMsg());
+            String sndLine = String.format("%s - %s", user.getMsg(), "");
+            tt2.setText(sndLine);
         }
         return v;
     }

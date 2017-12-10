@@ -1,7 +1,12 @@
 package com.gioaudino.geopost;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -10,15 +15,26 @@ import android.widget.EditText;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.gioaudino.geopost.Model.MyPosition;
 import com.gioaudino.geopost.Service.Helper;
 import com.gioaudino.geopost.Service.LoginRequest;
+import com.google.android.gms.location.LocationServices;
+
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final int LOCATION_PERMISSION = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        MyPosition.getInstance().setPositionProvider(LocationServices.getFusedLocationProviderClient(this));
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, LOCATION_PERMISSION);
+        }
+        MyPosition.getInstance().getPositionProvider().getLastLocation().addOnSuccessListener(location -> MyPosition.getInstance().setLocation(location));
     }
 
     public void login(View view) {
@@ -53,4 +69,14 @@ public class MainActivity extends AppCompatActivity {
         queue.add(request);
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == LOCATION_PERMISSION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Log.d("LOCATION PERMISSION", "GRANTED");
+            } else {
+                Log.d("LOCATION PERMISSION", "DENIED");
+            }
+        }
+    }
 }

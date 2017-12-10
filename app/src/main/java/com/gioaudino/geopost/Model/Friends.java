@@ -2,7 +2,6 @@ package com.gioaudino.geopost.Model;
 
 import com.gioaudino.geopost.Entity.User;
 import com.gioaudino.geopost.Entity.UserFromServer;
-import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;
 import java.util.Map;
@@ -37,7 +36,7 @@ public class Friends {
 
     public Map<String, User> mergeUsers(Followed followed) {
         for (UserFromServer user : followed.getFollowed()) {
-            User u = new User(user.getUsername(), user.getMsg(), new LatLng(user.getLat(), user.getLng()));
+            User u = user.toUser();
             if (this.friends.containsKey(user.getUsername()))
                 this.friends.replace(user.getUsername(), u);
             else
