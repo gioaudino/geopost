@@ -3,7 +3,7 @@
     package="com.gioaudino.geopost">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -26,7 +26,9 @@
         <activity
             android:name=".AddFriendActivity"
             android:label="@string/title_activity_add_friend"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".SplashActivity" />
+        <activity android:name=".MapSplashActivity"></activity>
     </application>
 
 </manifest>

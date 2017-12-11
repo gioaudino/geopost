@@ -24,6 +24,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.gioaudino.geopost.Model.Usernames;
 import com.gioaudino.geopost.Service.Helper;
+import com.gioaudino.geopost.Service.Values;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -56,7 +57,7 @@ public class AddFriendActivity extends AppCompatActivity {
                             Request.Method.GET,
                             Helper.buildUrlToFollowFriend(
                                     getResources().getString(R.string.follow_GET),
-                                    getSharedPreferences(Helper.PREFERENCES_NAME, MODE_PRIVATE).getString("session_id", null),
+                                    getSharedPreferences(Values.PREFERENCES_NAME, MODE_PRIVATE).getString("session_id", null),
                                     username),
                             response -> {
                                 Snackbar.make(findViewById(R.id.layout_add_friend), "You're now following " + username, Snackbar.LENGTH_LONG).show();
@@ -94,7 +95,7 @@ public class AddFriendActivity extends AppCompatActivity {
                                     Request.Method.GET,
                                     Helper.buildUrlToFetchUsernames(
                                             activity.getResources().getString(R.string.users_GET),
-                                            activity.getSharedPreferences(Helper.PREFERENCES_NAME, Context.MODE_PRIVATE).getString("session_id", null),
+                                            activity.getSharedPreferences(Values.PREFERENCES_NAME, Context.MODE_PRIVATE).getString("session_id", null),
                                             searchString,
                                             MAX_FETCHING),
                                     response -> {

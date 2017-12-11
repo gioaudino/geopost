@@ -1,0 +1,106 @@
+package com.gioaudino.geopost;
+
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.gioaudino.geopost.Model.Followed;
+import com.gioaudino.geopost.Model.Friends;
+import com.gioaudino.geopost.Model.MyPosition;
+import com.gioaudino.geopost.Service.Helper;
+import com.gioaudino.geopost.Service.Values;
+import com.google.android.gms.location.LocationServices;
+import com.google.gson.Gson;
+
+public class SplashActivity extends AppCompatActivity {
+
+    private boolean locationAvailable = false;
+    private boolean permissionGranted = false;
+    private boolean followedAvailable = false;
+    private SharedPreferences.Editor editor;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        Log.d("SPLASH ACTIVITY", "OnCreate");
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_splash);
+
+        SharedPreferences preferences = this.getSharedPreferences(Values.PREFERENCES_NAME, MODE_PRIVATE);
+        this.editor = preferences.edit();
+
+        MyPosition.getInstance().setPositionProvider(LocationServices.getFusedLocationProviderClient(this));
+
+        Log.d("SPLASH ACTIVITY", "GETTING PERMISSION");
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, Values.LOCATION_PERMISSION);
+        } else {
+            this.permissionGranted = true;
+            updateLocation();
+        }
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+        StringRequest followedRequest = new StringRequest(
+                Request.Method.GET,
+                Helper.buildUrl(this.getResources().getString(R.string.followed_GET),
+                        this.getSharedPreferences(Values.PREFERENCES_NAME, MODE_PRIVATE).getString("session_id", null)),
+                response -> {
+                    Followed f = new Gson().fromJson(response, Followed.class);
+                    Friends.getInstance().mergeUsers(f);
+                    editor.putLong(Values.FOLLOWED, System.currentTimeMillis() / 1000);
+                    this.followedAvailable = true;
+                    Log.d("FOLLOWED REQUEST", "REQUEST SUCCESSFUL");
+                    Log.d("FOLLOWED", Friends.getInstance().toString());
+                    editor.apply();
+                    this.startNewActivity();
+                },
+                error -> {
+                    Log.e("FOLLOWED REQUEST", "REQUEST FAILED");
+                }
+        );
+        queue.add(followedRequest);
+    }
+
+    private void startNewActivity() {
+        Log.d("SPLASH ACTIVITY", "GOING - location: " + locationAvailable + ", permission: " + permissionGranted + ", followed: " + followedAvailable);
+        if (this.locationAvailable && this.permissionGranted && this.followedAvailable) {
+            Intent intent = new Intent(this, FeedActivity.class);
+            this.startActivity(intent);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == Values.LOCATION_PERMISSION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                this.permissionGranted = true;
+                updateLocation();
+                Log.d("LOCATION PERMISSION", "GRANTED");
+
+            } else {
+                Log.d("LOCATION PERMISSION", "DENIED");
+            }
+        }
+    }
+
+    private void updateLocation() {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+            MyPosition.getInstance().getPositionProvider().getLastLocation().addOnSuccessListener(
+                    location -> {
+                        MyPosition.getInstance().setLocation(location);
+                        this.editor.putLong(Values.POSITION, System.currentTimeMillis() / 1000);
+                        this.locationAvailable = true;
+                        this.editor.apply();
+                        this.startNewActivity();
+                    });
+    }
+}

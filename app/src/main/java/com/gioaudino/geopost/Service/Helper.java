@@ -16,8 +16,6 @@ import java.util.List;
 
 public class Helper {
 
-    public static final String PREFERENCES_NAME = "PREFERENCES_NAME";
-
     public static String buildUrl(String url, String sessionId) {
         return url + "?session_id=" + sessionId;
     }
@@ -31,7 +29,7 @@ public class Helper {
     }
 
     public static void saveData(Activity activity, String username, String password, String sessionID) {
-        SharedPreferences preferences = activity.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE);
+        SharedPreferences preferences = activity.getSharedPreferences(Values.PREFERENCES_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor
                 .putString("username", username)
@@ -41,7 +39,7 @@ public class Helper {
     }
 
     public static void deleteData(Activity activity) {
-        SharedPreferences preferences = activity.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE);
+        SharedPreferences preferences = activity.getSharedPreferences(Values.PREFERENCES_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
         editor
                 .remove("username")
