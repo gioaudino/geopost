@@ -2,7 +2,6 @@ package com.gioaudino.geopost;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -14,7 +13,7 @@ import com.gioaudino.geopost.Service.Helper;
 import com.gioaudino.geopost.Service.LoginRequest;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +55,5 @@ public class MainActivity extends AppCompatActivity {
         );
         queue.add(request);
     }
-
 
 }

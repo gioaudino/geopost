@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -22,7 +21,7 @@ import com.gioaudino.geopost.Service.Values;
 import com.google.android.gms.location.LocationServices;
 import com.google.gson.Gson;
 
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends BaseActivity {
 
     private boolean locationAvailable = false;
     private boolean permissionGranted = false;
@@ -51,8 +50,8 @@ public class SplashActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest followedRequest = new StringRequest(
                 Request.Method.GET,
-                Helper.buildUrl(this.getResources().getString(R.string.followed_GET),
-                        this.getSharedPreferences(Values.PREFERENCES_NAME, MODE_PRIVATE).getString("session_id", null)),
+                Helper.buildSimpleUrl(this.getResources().getString(R.string.followed_GET),
+                        this.getSharedPreferences(Values.PREFERENCES_NAME, MODE_PRIVATE).getString(Values.SESSION_ID, null)),
                 response -> {
                     Followed f = new Gson().fromJson(response, Followed.class);
                     Friends.getInstance().mergeUsers(f);

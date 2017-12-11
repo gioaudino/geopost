@@ -3,8 +3,15 @@ package com.gioaudino.geopost.Service;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.gioaudino.geopost.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +23,7 @@ import java.util.List;
 
 public class Helper {
 
-    public static String buildUrl(String url, String sessionId) {
+    public static String buildSimpleUrl(String url, String sessionId) {
         return url + "?session_id=" + sessionId;
     }
 
@@ -66,6 +73,10 @@ public class Helper {
 
         old.removeAll(tbr);
         old.addAll(values);
+    }
+
+    public static void destroy(Activity activity) {
+
     }
 
 }

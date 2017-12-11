@@ -1,9 +1,8 @@
 package com.gioaudino.geopost;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class MapSplashActivity extends AppCompatActivity {
+public class MapSplashActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

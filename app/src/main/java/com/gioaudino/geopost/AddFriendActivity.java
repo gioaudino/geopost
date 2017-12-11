@@ -30,7 +30,7 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddFriendActivity extends AppCompatActivity {
+public class AddFriendActivity extends BaseActivity {
     private final static int MIN_LENGTH = 3;
     private static final int MAX_FETCHING = 5;
     private Activity activity;

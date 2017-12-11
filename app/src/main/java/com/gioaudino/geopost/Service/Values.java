@@ -12,4 +12,5 @@ public class Values {
     public static final String PREFERENCES_NAME = "PREFERENCES_NAME";
     public static final int FETCHING_INTERVAL = 30;
     public static final int LOCATION_PERMISSION = 1;
+    public static final String SESSION_ID = "session_id";
 }

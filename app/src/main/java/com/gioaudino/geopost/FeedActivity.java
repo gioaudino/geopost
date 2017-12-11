@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -23,7 +22,7 @@ import com.google.gson.Gson;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
-public class FeedActivity extends AppCompatActivity {
+public class FeedActivity extends BaseActivity {
 
     private boolean positionOk = false;
     private boolean followedOk = false;
@@ -93,7 +92,7 @@ public class FeedActivity extends AppCompatActivity {
         protected String doInBackground(Activity... act) {
             Log.d("FEED ACTIVITY", "REFRESHING FOLLOWED");
             try {
-                return Unirest.get(Helper.buildUrl(act[0].getResources().getString(R.string.followed_GET),
+                return Unirest.get(Helper.buildSimpleUrl(act[0].getResources().getString(R.string.followed_GET),
                         sharedPreferences.getString("session_id", null))).asString().getBody();
             } catch (UnirestException e) {
                 Log.e("REFRESHING FOLLOWED", "EXCEPTION: " + e.getMessage());
