@@ -21,7 +21,7 @@ import com.gioaudino.geopost.Service.Values;
 import com.google.android.gms.location.LocationServices;
 import com.google.gson.Gson;
 
-public class SplashActivity extends BaseActivity {
+public class ListSplashActivity extends BaseActivity {
 
     private boolean locationAvailable = false;
     private boolean permissionGranted = false;

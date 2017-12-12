@@ -37,6 +37,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                     Log.d("DESTRUCTION", "COMPLETED");
                 },
                 error -> {
+                    Log.e("DESTRUCTION", "Something went wrong with the HTTP logout call");
                 }
         );
         queue.add(request);

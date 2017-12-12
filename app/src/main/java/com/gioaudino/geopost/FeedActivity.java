@@ -1,10 +1,8 @@
 package com.gioaudino.geopost;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -13,14 +11,16 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.gioaudino.geopost.Model.Followed;
 import com.gioaudino.geopost.Model.Friends;
 import com.gioaudino.geopost.Model.MyPosition;
 import com.gioaudino.geopost.Service.Helper;
 import com.gioaudino.geopost.Service.Values;
 import com.google.gson.Gson;
-import com.mashape.unirest.http.Unirest;
-import com.mashape.unirest.http.exceptions.UnirestException;
 
 public class FeedActivity extends BaseActivity {
 
@@ -40,7 +40,7 @@ public class FeedActivity extends BaseActivity {
             Log.d("FEED ACTIVITY", "SOMETHING HAS TO BE UPDATED");
             setContentView(R.layout.activity_splash);
             if (followed) {
-                new RefreshFollowed().execute(this);
+                this.refreshFollowed();
             } else
                 this.followedOk = true;
             if (position) {
@@ -48,6 +48,32 @@ public class FeedActivity extends BaseActivity {
             } else
                 this.positionOk = true;
         } else go(true);
+    }
+
+    private void refreshFollowed() {
+        Log.d("FEED ACTIVITY", "REFRESHING FOLLOWED");
+        RequestQueue queue = Volley.newRequestQueue(this);
+        StringRequest request = new StringRequest(
+                Request.Method.GET,
+                Helper.buildSimpleUrl(
+                        this.getResources().getString(R.string.followed_GET),
+                        sharedPreferences.getString("session_id", null)),
+                response -> {
+                    Followed f = new Gson().fromJson(response, Followed.class);
+                    Friends.getInstance().mergeUsers(f);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putLong(Values.FOLLOWED, System.currentTimeMillis() / 1000);
+                    editor.apply();
+                    followedOk = true;
+                    Log.d("FEED ACTIVITY", "REFRESHING COMPLETED");
+                    if (positionOk) {
+                        go(false);
+                    }
+                },
+                error -> {
+                    Log.e("REFRESHING FOLLOWED", "EXCEPTION: " + error.getMessage());
+                });
+        queue.add(request);
     }
 
     private void refreshPosition() {
@@ -85,33 +111,6 @@ public class FeedActivity extends BaseActivity {
     public void addNewFriend(View view) {
         Intent intent = new Intent(this, AddFriendActivity.class);
         this.startActivity(intent);
-    }
-
-    private class RefreshFollowed extends AsyncTask<Activity, Void, String> {
-        @Override
-        protected String doInBackground(Activity... act) {
-            Log.d("FEED ACTIVITY", "REFRESHING FOLLOWED");
-            try {
-                return Unirest.get(Helper.buildSimpleUrl(act[0].getResources().getString(R.string.followed_GET),
-                        sharedPreferences.getString("session_id", null))).asString().getBody();
-            } catch (UnirestException e) {
-                Log.e("REFRESHING FOLLOWED", "EXCEPTION: " + e.getMessage());
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String response) {
-            Followed f = new Gson().fromJson(response, Followed.class);
-            Friends.getInstance().mergeUsers(f);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putLong(Values.FOLLOWED, System.currentTimeMillis() / 1000);
-            editor.apply();
-            followedOk = true;
-            if (positionOk) {
-                go(false);
-            }
-        }
     }
 
 }

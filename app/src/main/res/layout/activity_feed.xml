@@ -6,63 +6,44 @@
     android:layout_height="match_parent"
     tools:context="com.gioaudino.geopost.FeedActivity">
 
-    <!--<android.support.design.widget.AppBarLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:theme="@style/AppTheme.AppBarOverlay">-->
-
-    <!--<android.support.v7.widget.Toolbar-->
-    <!--android:id="@+id/toolbar"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="?attr/actionBarSize"-->
-    <!--android:background="?attr/colorPrimary"-->
-    <!--app:popupTheme="@style/AppTheme.PopupOverlay" />-->
-
-    <!--</android.support.design.widget.AppBarLayout>-->
-
     <include layout="@layout/content_feed" />
 
-    <!--<android.support.design.widget.FloatingActionButton-->
-    <!--android:id="@+id/goMap"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="bottom|end"-->
-    <!--android:layout_margin="@dimen/fab_margin"-->
-    <!--app:srcCompat="@drawable/ic_map_black_24dp" />-->
-
-    <!--<android.support.design.widget.FloatingActionButton-->
-    <!--android:id="@+id/goList"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="bottom|end"-->
-    <!---->
-    <!--android:layout_margin="@dimen/fab_margin"-->
-    <!--app:srcCompat="@drawable/ic_format_list_bulleted_black_24dp" />-->
-
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_map"
+        android:id="@+id/fab_refresh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
+        android:layout_gravity="start|bottom"
         android:layout_margin="16dp"
-        android:src="@drawable/ic_map_black_24dp" />
+        android:src="@drawable/ic_refresh_black_16dp" />
 
-    <View
-        android:id="@+id/dummy"
-        android:layout_width="1dp"
-        android:layout_height="16dp"
-        app:layout_anchor="@id/fab_map"
-        app:layout_anchorGravity="top|right|end" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:layout_marginBottom="115dp"
+        android:src="@drawable/ic_perm_identity_black_16dp"
+        app:layout_anchor="@id/fab_add"
+        app:layout_anchorGravity="top|end" />
+
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end|top"
+        android:layout_gravity="top"
+        android:layout_marginBottom="65dp"
+        android:src="@drawable/ic_person_add_black_16dp"
+        app:layout_anchor="@id/fab_map"
+        app:layout_anchorGravity="top|end" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_map"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:onClick="addNewFriend"
-        android:src="@drawable/ic_person_add_black_24dp"
-        app:layout_anchor="@id/dummy"
-        app:layout_anchorGravity="top|right|end" />
+        android:src="@drawable/ic_map_black_16dp" />
 
 </android.support.design.widget.CoordinatorLayout>

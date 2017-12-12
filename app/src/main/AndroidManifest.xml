@@ -27,7 +27,7 @@
             android:name=".AddFriendActivity"
             android:label="@string/title_activity_add_friend"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".SplashActivity" />
+        <activity android:name=".ListSplashActivity" />
         <activity android:name=".MapSplashActivity"></activity>
     </application>
 

@@ -43,7 +43,7 @@ public class MainActivity extends BaseActivity {
                     Log.d("LOGIN ACTIVITY", "REQUEST SUCCESSFUL - Token: " + response);
                     Helper.saveData(this, username, password, response);
                     spinner.setVisibility(View.INVISIBLE);
-                    Intent intent = new Intent(this, SplashActivity.class);
+                    Intent intent = new Intent(this, ListSplashActivity.class);
                     startActivity(intent);
                 },
                 error -> {

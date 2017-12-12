@@ -13,6 +13,7 @@ public class SortByDistanceComparator implements Comparator<User> {
 
     @Override
     public int compare(User u0, User u1) {
-        return 0;
+        return (int) (u0.getDistance() - u1.getDistance());
+
     }
 }
