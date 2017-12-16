@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.gioaudino.geopost.Entity.User;
 import com.gioaudino.geopost.R;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -42,7 +43,13 @@ public class UserAdapter extends ArrayAdapter<User> {
             TextView tt1 = v.findViewById(R.id.line1);
             TextView tt2 = v.findViewById(R.id.line2);
             tt1.setText(user.getUsername());
-            String sndLine = String.format("%s - %s", user.getMsg(), "");
+            float distance = user.getDistance();
+            String unit = "m";
+            if(distance > 1000){
+                distance = distance/1000;
+                unit = "km";
+            }
+            String sndLine = String.format("%s - %s %s", user.getMsg(), Helper.round(distance), unit);
             tt2.setText(sndLine);
         }
         return v;

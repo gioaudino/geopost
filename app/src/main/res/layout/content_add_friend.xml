@@ -29,7 +29,7 @@
         android:layout_marginEnd="10dp"
         android:layout_marginStart="10dp"
         android:text="@string/error_network_fetching"
-        android:textColor="#ff0000"
+        android:textColor="@color/redBackgroundTint"
         android:textStyle="bold"
         android:visibility="invisible" />
 

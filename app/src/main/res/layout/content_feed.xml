@@ -8,7 +8,20 @@
     tools:context="com.gioaudino.geopost.FeedActivity"
     tools:showIn="@layout/activity_feed">
 
+    <TextView
+        android:id="@+id/empty_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/empty_list"
+        android:visibility="gone"
+        android:textSize="12sp"
+        android:textAllCaps="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+         />
+
     <ListView
+        android:id="@+id/friends_list"
         android:layout_width="304dp"
         android:layout_height="437dp"
         android:layout_marginTop="16dp"

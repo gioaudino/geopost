@@ -43,6 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
+        android:tint="@color/iconsTint"
         android:src="@drawable/ic_map_black_24dp" />
 
     <View
@@ -58,6 +59,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|top"
         android:layout_margin="16dp"
+        android:tint="@color/iconsTint"
         android:src="@drawable/ic_format_list_bulleted_black_24dp"
         app:layout_anchor="@id/dummy"
         app:layout_anchorGravity="top|right|end" />

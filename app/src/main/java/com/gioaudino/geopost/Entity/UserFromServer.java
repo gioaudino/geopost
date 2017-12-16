@@ -54,11 +54,8 @@ public class UserFromServer {
         if (null != this.msg && this.msg.length() > 0)
             u.setMsg(this.msg);
         if (null != this.lat && null != this.lng) {
-            u.setLastPosition(new LatLng(this.lat, this.lng));
-            Location loc = new Location("");
-            loc.setLatitude(this.lat);
-            loc.setLongitude(this.lng);
-            u.setDistance(MyPosition.getInstance().getLocation().distanceTo(loc));
+            u.setLocation(this.lat, this.lng);
+            u.setDistance(MyPosition.getInstance().getLocation());
         }
         return u;
     }

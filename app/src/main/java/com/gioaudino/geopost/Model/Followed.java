@@ -25,7 +25,7 @@ public class Followed {
 
     public List<User> toUsers(List<User> result) {
         for (UserFromServer user : followed) {
-            User u = new User(user.getUsername(), user.getMsg(), new LatLng(user.getLat(), user.getLng()));
+            User u = new User(user.getUsername(), user.getMsg(), user.getLat(), user.getLng());
             result.add(u);
         }
         return result;

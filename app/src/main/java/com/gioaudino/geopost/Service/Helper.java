@@ -3,18 +3,14 @@ package com.gioaudino.geopost.Service;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
+import android.location.Location;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.gioaudino.geopost.R;
-
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by gioaudino on 17/11/17.
@@ -75,8 +71,27 @@ public class Helper {
         old.addAll(values);
     }
 
-    public static void destroy(Activity activity) {
-
+    public static String round(float d) {
+        DecimalFormat df = new DecimalFormat("#.#");
+        return df.format(d);
     }
 
+    public static String round(float d, int decimalPlace) {
+        if (decimalPlace <= 0) return String.valueOf((int) d);
+        if (decimalPlace == 1) return round(d);
+
+        StringBuilder sb = new StringBuilder("#.");
+        for (int i = 0; i < decimalPlace; i++) sb.append('#');
+
+        return new DecimalFormat(sb.toString()).format(d);
+    }
+
+    public static String buildUrlToUpdateStatus(String url, String sessionId, String status, Location location) {
+        DecimalFormat df = new DecimalFormat("#.#");
+        return String.format(Locale.ITALIAN, "%s?session_id=%s&message=%s&lat=%s&lon=%s", url, sessionId, status, df.format(location.getLatitude()), df.format(location.getLongitude()));
+    }
+
+    public static String getSessionId(Activity activity) {
+        return activity.getSharedPreferences(Values.PREFERENCES_NAME, Context.MODE_PRIVATE).getString(Values.SESSION_ID, null);
+    }
 }

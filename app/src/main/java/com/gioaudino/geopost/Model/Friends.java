@@ -1,8 +1,12 @@
 package com.gioaudino.geopost.Model;
 
+import android.location.Location;
+
 import com.gioaudino.geopost.Entity.User;
 import com.gioaudino.geopost.Entity.UserFromServer;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -15,7 +19,7 @@ import java.util.TreeMap;
 public class Friends {
     private static final Friends ourInstance = new Friends();
 
-    private Map<String, User> friends;
+    private Map<String, User> friends = new HashMap<>();
 
     public static Friends getInstance() {
         return ourInstance;
@@ -25,7 +29,14 @@ public class Friends {
         friends = new TreeMap<>();
     }
 
+    public List<User> getFriends() {
+        return new ArrayList<>(friends.values());
+    }
+
     public Map<String, User> mergeUsers(List<User> users) {
+        if (this.friends.size() == 0) {
+            this.friends = new HashMap<>();
+        }
         for (User user : users)
             if (this.friends.containsKey(user.getUsername()))
                 this.friends.replace(user.getUsername(), user);
@@ -35,6 +46,9 @@ public class Friends {
     }
 
     public Map<String, User> mergeUsers(Followed followed) {
+        if (this.friends.size() == 0) {
+            this.friends = new HashMap<>();
+        }
         for (UserFromServer user : followed.getFollowed()) {
             User u = user.toUser();
             if (this.friends.containsKey(user.getUsername()))
@@ -43,6 +57,12 @@ public class Friends {
                 this.friends.put(user.getUsername(), u);
         }
         return friends;
+    }
+
+    public void updateDistance(Location location) {
+        for (User user : this.friends.values()) {
+
+        }
     }
 
     @Override
@@ -55,5 +75,9 @@ public class Friends {
         }
         sb.append("\n\t}");
         return sb.toString();
+    }
+
+    public int size() {
+        return this.friends.size();
     }
 }

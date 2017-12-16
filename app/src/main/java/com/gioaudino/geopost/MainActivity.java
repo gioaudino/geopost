@@ -3,6 +3,7 @@ package com.gioaudino.geopost;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 
@@ -22,6 +23,19 @@ public class MainActivity extends BaseActivity {
 
 
     }
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        Log.d("LOGIN", "KEY PRESSED: " + keyCode);
+        if (keyCode == KeyEvent.KEYCODE_ENTER && ((EditText) this.findViewById(R.id.username)).getText().toString().length() > 0 &&
+                ((EditText) this.findViewById(R.id.password)).getText().toString().length() > 0) {
+            login(null);
+            return true;
+        } else {
+            return super.onKeyUp(keyCode, event);
+        }
+    }
+
 
     public void login(View view) {
         Log.d("LOGIN ACTIVITY", "   LOGIN REQUEST");
@@ -50,7 +64,8 @@ public class MainActivity extends BaseActivity {
                     spinner.setVisibility(View.INVISIBLE);
                     errorMsg.setVisibility(View.VISIBLE);
                     Log.d("LOGIN ACTIVITY", "REQUEST FAILED - " + error.getMessage());
-                    Log.d("LOGIN ACTIVITY", "REQUEST FAILED - " + error.networkResponse.statusCode + " " + error.networkResponse.data);
+                    if (error.networkResponse != null)
+                        Log.d("LOGIN ACTIVITY", "REQUEST FAILED - " + error.networkResponse.statusCode + " " + error.networkResponse.data);
                 }
         );
         queue.add(request);

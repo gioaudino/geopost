@@ -40,8 +40,8 @@ public class ListSplashActivity extends BaseActivity {
         MyPosition.getInstance().setPositionProvider(LocationServices.getFusedLocationProviderClient(this));
 
         Log.d("SPLASH ACTIVITY", "GETTING PERMISSION");
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION}, Values.LOCATION_PERMISSION);
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, Values.LOCATION_PERMISSION);
         } else {
             this.permissionGranted = true;
             updateLocation();
@@ -51,7 +51,7 @@ public class ListSplashActivity extends BaseActivity {
         StringRequest followedRequest = new StringRequest(
                 Request.Method.GET,
                 Helper.buildSimpleUrl(this.getResources().getString(R.string.followed_GET),
-                        this.getSharedPreferences(Values.PREFERENCES_NAME, MODE_PRIVATE).getString(Values.SESSION_ID, null)),
+                        Helper.getSessionId(this)),
                 response -> {
                     Followed f = new Gson().fromJson(response, Followed.class);
                     Friends.getInstance().mergeUsers(f);
@@ -92,7 +92,7 @@ public class ListSplashActivity extends BaseActivity {
     }
 
     private void updateLocation() {
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
             MyPosition.getInstance().getPositionProvider().getLastLocation().addOnSuccessListener(
                     location -> {
                         MyPosition.getInstance().setLocation(location);

@@ -1,6 +1,6 @@
 package com.gioaudino.geopost.Entity;
 
-import com.google.android.gms.maps.model.LatLng;
+import android.location.Location;
 
 /**
  * Created by gioaudino on 13/11/17.
@@ -12,17 +12,26 @@ public class User {
 
     private String msg;
 
-    private LatLng lastPosition;
+    private Location location;
 
     private float distance;
 
     public User() {
     }
 
-    public User(String username, String msg, LatLng lastPosition) {
+    public User(String username, String msg, Location location) {
         this.username = username;
         this.msg = msg;
-        this.lastPosition = lastPosition;
+        this.location = location;
+    }
+
+    public User(String username, String msg, double lat, double lng) {
+        this.username = username;
+        this.msg = msg;
+        Location loc = new Location("");
+        loc.setLatitude(lat);
+        loc.setLongitude(lng);
+        this.location = loc;
     }
 
     public String getUsername() {
@@ -41,12 +50,19 @@ public class User {
         this.msg = msg;
     }
 
-    public LatLng getLastPosition() {
-        return lastPosition;
+    public Location getLocation() {
+        return location;
     }
 
-    public void setLastPosition(LatLng lastPosition) {
-        this.lastPosition = lastPosition;
+    public void setLocation(double lat, double lng) {
+        Location loc = new Location("");
+        loc.setLatitude(lat);
+        loc.setLongitude(lng);
+        this.location = loc;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     public float getDistance() {
@@ -55,6 +71,10 @@ public class User {
 
     public void setDistance(float distance) {
         this.distance = distance;
+    }
+
+    public void setDistance(Location location) {
+        this.distance = location.distanceTo(this.location);
     }
 
     @Override
@@ -77,7 +97,8 @@ public class User {
         return "User{" +
                 "username='" + username + '\'' +
                 ", msg='" + msg + '\'' +
-                ", lastPosition=" + lastPosition +
+                ", location=" + location +
+                ", distance=" + distance +
                 '}';
     }
 }

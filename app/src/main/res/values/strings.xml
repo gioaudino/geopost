@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">GioPost</string>
-    <string name="username">username</string>
-    <string name="password">password</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="error_msg">This user does not exist. Check your username and password or register online</string>
     <string name="title_activity_feed">Friends\' feed</string>
@@ -24,4 +24,11 @@
     <string name="username_label">Username</string>
     <string name="add_new_friend">Add new friend</string>
     <string name="error_network_fetching">There\'s no user with such prefix</string>
+    <string name="title_activity_profile">ProfileActivity</string>
+    <string name="title_activity_status_update">StatusUpdateActivity</string>
+    <string name="status_update">Update your status</string>
+    <string name="status_type">Type your new status</string>
+    <string name="update">Update</string>
+    <string name="last_status">Last status sent</string>
+    <string name="empty_list">You are not following anybody</string>
 </resources>
