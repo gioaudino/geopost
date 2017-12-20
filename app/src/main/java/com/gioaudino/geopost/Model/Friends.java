@@ -63,7 +63,7 @@ public class Friends {
 
     public void updateDistances(Location location) {
         this.friends.forEach((key, value) -> {
-            Log.d("DISTANCE UPDATE", value.getUsername() + " | " + Helper.formatDistance(value.getLocation().distanceTo(location)));
+            Log.d("DISTANCE UPDATE", value.getUsername() + " | " + (location != null && value.getLocation() != null ? Helper.formatDistance(value.getLocation().distanceTo(location)) : ""));
             value.setDistance(location);
         });
     }

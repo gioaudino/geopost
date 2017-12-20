@@ -74,7 +74,8 @@ public class User {
     }
 
     public void setDistance(Location location) {
-        this.distance = location.distanceTo(this.location);
+        if(null != location && null != this.location)
+            this.distance = location.distanceTo(this.location);
     }
 
     @Override
