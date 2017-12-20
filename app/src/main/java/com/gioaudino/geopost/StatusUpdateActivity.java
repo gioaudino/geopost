@@ -2,6 +2,7 @@ package com.gioaudino.geopost;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -35,7 +36,7 @@ public class StatusUpdateActivity extends BaseActivity {
     }
 
     public void goToMap(View view) {
-        Intent intent = new Intent(this, MapSplashActivity.class);
+        Intent intent = new Intent(this, MapActivity.class);
         this.startActivity(intent);
     }
 
@@ -62,34 +63,34 @@ public class StatusUpdateActivity extends BaseActivity {
         RequestQueue queue = Volley.newRequestQueue(this);
 
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            MyPosition.getInstance().getPositionProvider().getLastLocation().addOnSuccessListener(location -> {
-                Log.d("STATUS UPDATE", "POSITION RETRIEVED - " + (location == null ? "null" : location.getLatitude() + " | " + location.getLongitude()));
-                MyPosition.getInstance().setLocation(location);
-                String url = "BAU";
-                try {
-                    url = Helper.buildUrlToUpdateStatus(
-                            getResources().getString(R.string.status_update_GET),
-                            Helper.getSessionId(StatusUpdateActivity.this),
-                            URLEncoder.encode(status, "UTF-8"),
-                            location);
-                } catch (UnsupportedEncodingException ignored) {
+            Location location = MyPosition.getInstance().getLocation();
+            Log.d("STATUS UPDATE", "POSITION RETRIEVED - " + (location == null ? "null" : location.getLatitude() + " | " + location.getLongitude()));
+            MyPosition.getInstance().setLocation(location);
+            String url = "BAU";
+            try {
+                url = Helper.buildUrlToUpdateStatus(
+                        getResources().getString(R.string.status_update_GET),
+                        Helper.getSessionId(StatusUpdateActivity.this),
+                        URLEncoder.encode(status, "UTF-8"),
+                        location);
+            } catch (UnsupportedEncodingException ignored) {
 
-                }
-                Log.d("STATUS UPDATE", "URL: " + url);
-                StringRequest request = new StringRequest(
-                        Request.Method.GET,
-                        url,
-                        response -> Snackbar.make(this.findViewById(R.id.status_update_coordinator), "Status updated!", Snackbar.LENGTH_LONG).show(),
-                        error -> {
-                            try {
-                                Log.e("STATUS UPDATE", "Something went wrong - " + error.getMessage() + " [" + error.networkResponse.statusCode + "] " + new String(error.networkResponse.data));
-                            } catch (NullPointerException e) {
-                                Log.e("STATUS UPDATE", "Something went wrong - " + error.getMessage());
-                            }
+            }
+            Log.d("STATUS UPDATE", "URL: " + url);
+            StringRequest request = new StringRequest(
+                    Request.Method.GET,
+                    url,
+                    response -> Snackbar.make(this.findViewById(R.id.status_update_coordinator), "Status updated!", Snackbar.LENGTH_LONG).show(),
+                    error -> {
+                        try {
+                            Log.e("STATUS UPDATE", "Something went wrong - " + error.getMessage() + " [" + error.networkResponse.statusCode + "] " + new String(error.networkResponse.data));
+                        } catch (NullPointerException e) {
+                            Log.e("STATUS UPDATE", "Something went wrong - " + error.getMessage());
                         }
-                );
-                queue.add(request);
-            });
+                    }
+            );
+            queue.add(request);
+
         } else {
             Snackbar.make(findViewById(R.id.status_update_coordinator), "You cannot update your status without granting permissions", Snackbar.LENGTH_SHORT).setAction("Give permission", view -> {
                 if (ContextCompat.checkSelfPermission(StatusUpdateActivity.this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)

@@ -1,5 +1,6 @@
 package com.gioaudino.geopost;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -11,7 +12,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -30,12 +30,13 @@ import com.google.gson.Gson;
 
 import java.util.List;
 
-public class FeedActivity extends FriendsActivity {
+public class ListActivity extends FriendsActivity {
 
     private boolean positionOk = false;
     private boolean followedOk = false;
     private SharedPreferences sharedPreferences;
     private List<User> values;
+    private Snackbar snackbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,14 +44,14 @@ public class FeedActivity extends FriendsActivity {
         this.setContentView(R.layout.activity_splash);
         this.sharedPreferences = this.getSharedPreferences(Values.PREFERENCES_NAME, MODE_PRIVATE);
 
-        Log.d("FEED ACTIVITY", "OnStart");
+        Log.d("LIST ACTIVITY", "OnStart");
 
         this.refreshFollowed();
         this.refreshPosition();
     }
 
     private void refreshFollowed() {
-        Log.d("FEED ACTIVITY", "REFRESHING FOLLOWED");
+        Log.d("LIST ACTIVITY", "REFRESHING FOLLOWED");
         RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest request = new StringRequest(
                 Request.Method.GET,
@@ -62,7 +63,7 @@ public class FeedActivity extends FriendsActivity {
                     Friends.getInstance().mergeUsers(f);
                     this.setData();
                     followedOk = true;
-                    Log.d("FEED ACTIVITY", "REFRESHING COMPLETED");
+                    Log.d("LIST ACTIVITY", "REFRESHING COMPLETED");
                     if (positionOk) {
                         go();
                     }
@@ -79,7 +80,7 @@ public class FeedActivity extends FriendsActivity {
     }
 
     private void refreshPosition() {
-        Log.d("FEED ACTIVITY", "REFRESHING POSITION");
+        Log.d("LIST ACTIVITY", "REFRESHING POSITION");
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, Values.LOCATION_PERMISSION);
         } else {
@@ -94,7 +95,7 @@ public class FeedActivity extends FriendsActivity {
     }
 
     private void go() {
-        Log.d("FEED ACTIVITY", "Let's go");
+        Log.d("LIST ACTIVITY", "Let's go");
         if (followedOk && positionOk) {
             setContentView(R.layout.activity_feed);
             Toolbar toolbar = findViewById(R.id.toolbar);
@@ -111,17 +112,20 @@ public class FeedActivity extends FriendsActivity {
             listView.setAdapter(new UserAdapter(this, R.layout.list_element, this.values));
         else
             adapter.notifyDataSetChanged();
+
         if (shouldShowSnackBar)
             Snackbar.make(this.findViewById(R.id.friends_list_coordinator), "Friend list, their position and your position have been updated", Snackbar.LENGTH_LONG).show();
 
-        TextView empty = this.findViewById(R.id.empty_list);
 
-        if(Friends.getInstance().size() == 0){
+        if (Friends.getInstance().size() == 0) {
             listView.setVisibility(View.GONE);
-            empty.setVisibility(View.VISIBLE);
+            this.snackbar = Snackbar.make(this.findViewById(R.id.friends_list_coordinator), R.string.empty_list, Snackbar.LENGTH_INDEFINITE);
+            this.snackbar.setAction("Dismiss", view -> ListActivity.this.snackbar.dismiss());
+            this.snackbar.show();
         } else {
             listView.setVisibility(View.VISIBLE);
-            empty.setVisibility(View.GONE);
+            if (this.snackbar != null)
+                this.snackbar.dismiss();
         }
 
         followedOk = false;
@@ -129,12 +133,13 @@ public class FeedActivity extends FriendsActivity {
     }
 
     public void goToMap(View view) {
-        Snackbar.make(view, "Here I would go to the map view", Snackbar.LENGTH_LONG).show();
+        Intent intent = new Intent(this, MapActivity.class);
+        this.startActivity(intent);
     }
 
     public void refresh(View view) {
-        Log.d("FEED ACTIVITY", "REFRESH ACTION");
-        Log.d("FEED ACTIVITY", "REFRESHING POSITION");
+        Log.d("LIST ACTIVITY", "REFRESH ACTION");
+        Log.d("LIST ACTIVITY", "REFRESHING POSITION");
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, Values.LOCATION_PERMISSION);
         }
@@ -148,7 +153,7 @@ public class FeedActivity extends FriendsActivity {
                     if (followedOk)
                         publishList(true);
                 });
-        Log.d("FEED ACTIVITY", "REFRESHING FOLLOWED");
+        Log.d("LIST ACTIVITY", "REFRESHING FOLLOWED");
 
         StringRequest request = new StringRequest(
                 Request.Method.GET,
@@ -160,7 +165,7 @@ public class FeedActivity extends FriendsActivity {
                     Friends.getInstance().mergeUsers(f);
                     this.setData();
                     followedOk = true;
-                    Log.d("FEED ACTIVITY", "FOLLOWED REFRESHING COMPLETED");
+                    Log.d("LIST ACTIVITY", "FOLLOWED REFRESHING COMPLETED");
                     if (positionOk) {
                         publishList(true);
                     }

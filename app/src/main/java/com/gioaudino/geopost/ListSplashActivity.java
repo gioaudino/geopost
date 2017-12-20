@@ -1,7 +1,6 @@
 package com.gioaudino.geopost;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,7 +17,6 @@ import com.gioaudino.geopost.Model.Friends;
 import com.gioaudino.geopost.Model.MyPosition;
 import com.gioaudino.geopost.Service.Helper;
 import com.gioaudino.geopost.Service.Values;
-import com.google.android.gms.location.LocationServices;
 import com.google.gson.Gson;
 
 public class ListSplashActivity extends BaseActivity {
@@ -26,18 +24,12 @@ public class ListSplashActivity extends BaseActivity {
     private boolean locationAvailable = false;
     private boolean permissionGranted = false;
     private boolean followedAvailable = false;
-    private SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d("SPLASH ACTIVITY", "OnCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-
-        SharedPreferences preferences = this.getSharedPreferences(Values.PREFERENCES_NAME, MODE_PRIVATE);
-        this.editor = preferences.edit();
-
-        MyPosition.getInstance().setPositionProvider(LocationServices.getFusedLocationProviderClient(this));
 
         Log.d("SPLASH ACTIVITY", "GETTING PERMISSION");
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -55,11 +47,9 @@ public class ListSplashActivity extends BaseActivity {
                 response -> {
                     Followed f = new Gson().fromJson(response, Followed.class);
                     Friends.getInstance().mergeUsers(f);
-                    editor.putLong(Values.FOLLOWED, System.currentTimeMillis() / 1000);
                     this.followedAvailable = true;
                     Log.d("FOLLOWED REQUEST", "REQUEST SUCCESSFUL");
                     Log.d("FOLLOWED", Friends.getInstance().toString());
-                    editor.apply();
                     this.startNewActivity();
                 },
                 error -> {
@@ -72,7 +62,7 @@ public class ListSplashActivity extends BaseActivity {
     private void startNewActivity() {
         Log.d("SPLASH ACTIVITY", "GOING - location: " + locationAvailable + ", permission: " + permissionGranted + ", followed: " + followedAvailable);
         if (this.locationAvailable && this.permissionGranted && this.followedAvailable) {
-            Intent intent = new Intent(this, FeedActivity.class);
+            Intent intent = new Intent(this, ListActivity.class);
             this.startActivity(intent);
         }
     }
@@ -96,9 +86,7 @@ public class ListSplashActivity extends BaseActivity {
             MyPosition.getInstance().getPositionProvider().getLastLocation().addOnSuccessListener(
                     location -> {
                         MyPosition.getInstance().setLocation(location);
-                        this.editor.putLong(Values.POSITION, System.currentTimeMillis() / 1000);
                         this.locationAvailable = true;
-                        this.editor.apply();
                         this.startNewActivity();
                     });
     }

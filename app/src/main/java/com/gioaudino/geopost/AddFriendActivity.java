@@ -2,11 +2,10 @@ package com.gioaudino.geopost;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.Html;
@@ -121,13 +120,18 @@ public class AddFriendActivity extends BaseActivity {
 
             }
         });
-
-        FloatingActionButton fab = findViewById(R.id.fab_map);
-        fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show());
     }
 
 
+    public void goToList(View view) {
+        Intent intent = new Intent(this, ListSplashActivity.class);
+        this.startActivity(intent);
+    }
+
+    public void goToMap(View view) {
+        Intent intent = new Intent(this, MapActivity.class);
+        this.startActivity(intent);
+    }
 }
 
 

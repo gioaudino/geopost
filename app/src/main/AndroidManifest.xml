@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".FeedActivity"
+            android:name=".ListActivity"
             android:label="@string/title_activity_feed"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -36,11 +36,16 @@
         <activity
             android:name=".StatusUpdateActivity"
             android:label="@string/title_activity_status_update"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCBWdp04OOH6rJwm3u3kd08G7PQ1fx7AlU"/>
+            android:value="AIzaSyCBWdp04OOH6rJwm3u3kd08G7PQ1fx7AlU" />
+
+        <activity
+            android:name=".MapActivity"
+            android:label="@string/title_activity_map"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

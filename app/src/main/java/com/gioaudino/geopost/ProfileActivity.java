@@ -46,14 +46,6 @@ public class ProfileActivity extends BaseActivity implements OnMapReadyCallback 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_profile);
-//        this.locationCallback = new LocationCallback() {
-//            @Override
-//            public void onLocationResult(LocationResult locationResult) {
-//                super.onLocationResult(locationResult);
-//                ProfileActivity.this.lastLocation = locationResult.getLastLocation();
-//                new Thread(() -> Friends.getInstance().updateDistance(locationResult.getLastLocation())).run();
-//            }
-//        };
 
         RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest request = new StringRequest(
@@ -62,9 +54,11 @@ public class ProfileActivity extends BaseActivity implements OnMapReadyCallback 
                         this.getResources().getString(R.string.profile_GET),
                         Helper.getSessionId(this)),
                 response -> {
-                    this.me = new Gson().fromJson(response, UserFromServer.class).toUser();
-                    this.profileAvailable = true;
+                    UserFromServer usf = new Gson().fromJson(response, UserFromServer.class);
                     Log.d("PROFILE", "HTTP response: " + response);
+                    Log.d("PROFILE", "USF: " + usf);
+                    this.me = usf.toUser();
+                    this.profileAvailable = true;
                     publishProfile();
                 }, error -> {
         });
@@ -74,14 +68,6 @@ public class ProfileActivity extends BaseActivity implements OnMapReadyCallback 
         mapFragment.getMapAsync(this);
 
     }
-
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
-//        if (this.googleApiClient != null) {
-//            LocationServices.getFusedLocationProviderClient(this).removeLocationUpdates(this.locationCallback);
-//        }
-//    }
 
     private void publishProfile() {
         Log.d("PROFILE ACTIVITY", "PUBLISH PROFILE");
@@ -103,7 +89,7 @@ public class ProfileActivity extends BaseActivity implements OnMapReadyCallback 
             if (this.me.getLocation() != null) {
                 LatLng latLng = new LatLng(me.getLocation().getLatitude(), me.getLocation().getLongitude());
                 this.map.addMarker(new MarkerOptions().position(latLng).title("Last known position"));
-                this.map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 11));
+                this.map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
             }
         }
 
@@ -124,15 +110,6 @@ public class ProfileActivity extends BaseActivity implements OnMapReadyCallback 
         this.startActivity(intent);
     }
 
-//    protected synchronized void buildGoogleApiClient() {
-//        this.googleApiClient = new GoogleApiClient.Builder(this)
-//                .addConnectionCallbacks(this)
-//                .addOnConnectionFailedListener(this)
-//                .addApi(LocationServices.API)
-//                .build();
-//        this.googleApiClient.connect();
-//    }
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.map = googleMap;
@@ -140,67 +117,4 @@ public class ProfileActivity extends BaseActivity implements OnMapReadyCallback 
         this.publishProfile();
     }
 
-//    @Override
-//    public void onConnected(@Nullable Bundle bundle) {
-//        this.locationRequest = new LocationRequest();
-//        this.locationRequest.setInterval(1000);
-//        this.locationRequest.setFastestInterval(1000);
-//        this.locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-//                == PackageManager.PERMISSION_GRANTED) {
-//            LocationServices.getFusedLocationProviderClient(this).requestLocationUpdates(this.locationRequest, this.locationCallback, null);
-//        }
-//    }
-
-//    @Override
-//    public void onConnectionSuspended(int i) {
-//        Log.e("PROFILE ACTIVITY", "Connection suspended (?)");
-//    }
-//
-//    @Override
-//    public void onLocationChanged(Location location) {
-//        this.lastLocation = location;
-//
-//        new Thread(() -> Friends.getInstance().updateDistance(location)).run();
-//
-//        if (myPos != null) myPos.remove();
-//        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-//        MarkerOptions markerOptions = new MarkerOptions();
-//        markerOptions.position(latLng);
-//        markerOptions.title("Current Position");
-//        this.myPos = this.map.addMarker(markerOptions);
-//
-//        this.map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 11));
-//    }
-//
-//    @Override
-//    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-//        Log.e("PROFILE ACTIVITY", "Connection failed (?)");
-//    }
-
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-//        switch (requestCode) {
-//            case Values.LOCATION_PERMISSION: {
-//                if (grantResults.length > 0
-//                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                    if (ContextCompat.checkSelfPermission(this,
-//                            Manifest.permission.ACCESS_FINE_LOCATION)
-//                            == PackageManager.PERMISSION_GRANTED) {
-////
-////                        if (this.googleApiClient == null) {
-////                            buildGoogleApiClient();
-////                        }
-////                        this.map.setMyLocationEnabled(true);
-//                    }
-//
-//                } else {
-//                    Log.d("PROFILE ACTIVITY", "PERMISSION DENIED");
-//                    // permission denied, boo! Disable the
-//                    // functionality that depends on this permission.
-//
-//                }
-//            }
-//        }
-//    }
 }

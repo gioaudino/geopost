@@ -1,6 +1,7 @@
 package com.gioaudino.geopost.Model;
 
 import android.location.Location;
+import android.util.Log;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 
@@ -21,6 +22,7 @@ public class MyPosition {
     }
 
     private Location location;
+
     private FusedLocationProviderClient positionProvider;
 
     public Location getLocation() {
@@ -29,6 +31,8 @@ public class MyPosition {
 
     public void setLocation(Location location) {
         this.location = location;
+        Friends.getInstance().updateDistances(location);
+        Log.d("POSITION MODEL", "UPDATING DISTANCES");
     }
 
     public FusedLocationProviderClient getPositionProvider() {

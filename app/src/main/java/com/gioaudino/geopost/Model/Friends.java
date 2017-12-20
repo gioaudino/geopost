@@ -1,9 +1,11 @@
 package com.gioaudino.geopost.Model;
 
 import android.location.Location;
+import android.util.Log;
 
 import com.gioaudino.geopost.Entity.User;
 import com.gioaudino.geopost.Entity.UserFromServer;
+import com.gioaudino.geopost.Service.Helper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,10 +61,11 @@ public class Friends {
         return friends;
     }
 
-    public void updateDistance(Location location) {
-        for (User user : this.friends.values()) {
-
-        }
+    public void updateDistances(Location location) {
+        this.friends.forEach((key, value) -> {
+            Log.d("DISTANCE UPDATE", value.getUsername() + " | " + Helper.formatDistance(value.getLocation().distanceTo(location)));
+            value.setDistance(location);
+        });
     }
 
     @Override

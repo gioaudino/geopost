@@ -1,17 +1,9 @@
 package com.gioaudino.geopost;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.gioaudino.geopost.Service.Helper;
-import com.gioaudino.geopost.Service.Values;
+import com.gioaudino.geopost.Service.MyLocationUpdater;
 
 /**
  * Created by gioaudino on 11/12/17.
@@ -21,34 +13,26 @@ import com.gioaudino.geopost.Service.Values;
 public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
-    protected void onRestart() {
-        super.onRestart();
-//        this.onDestroy();
-//        Intent intent = new Intent(this, MainActivity.class);
-//        this.startActivity(intent);
+    protected void onStart() {
+        super.onStart();
+//        Log.d("ACTIVITY" + this.getClass().getSimpleName(), "ON START");
+//        if (!(this instanceof MainActivity))
+//            MyLocationUpdater.getInstance().requestLocation(this);
     }
 
-//    @Override
-//    protected void onDestroy() {
-//        super.onDestroy();
-//        Log.d("DESTRUCTION - " + this.getClass().getCanonicalName(), "IN PROGRESS");
-//        SharedPreferences preferences = this.getSharedPreferences(Values.PREFERENCES_NAME, Context.MODE_PRIVATE);
-//        RequestQueue queue = Volley.newRequestQueue(this);
-//        StringRequest request = new StringRequest(
-//                Request.Method.GET,
-//                Helper.buildSimpleUrl(
-//                        this.getResources().getString(R.string.logout_GET),
-//                        preferences.getString(Values.SESSION_ID, null)),
-//                response -> {
-//                    SharedPreferences.Editor editor = preferences.edit();
-//                    editor.clear();
-//                    editor.apply();
-//                    Log.d("DESTRUCTION", "COMPLETED");
-//                },
-//                error -> {
-//                    Log.e("DESTRUCTION", "Something went wrong with the HTTP logout call");
-//                }
-//        );
-//        queue.add(request);
-//    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("ACTIVITY" + this.getClass().getSimpleName(), "ON PAUSE");
+        if (!(this instanceof MainActivity))
+            MyLocationUpdater.getInstance().pauseLocationRequest();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("ACTIVITY" + this.getClass().getSimpleName(), "ON RESUME");
+        if (!(this instanceof MainActivity))
+            MyLocationUpdater.getInstance().requestLocation(this);
+    }
 }

@@ -1,13 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/map_coordinator"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/friends_list_coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.gioaudino.geopost.ListActivity">
+    tools:context="com.gioaudino.geopost.MapActivity">
 
-    <include layout="@layout/content_feed" />
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <include layout="@layout/content_map" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_update_status"
@@ -63,8 +77,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:onClick="goToMap"
-        android:src="@drawable/ic_map_black_16dp"
+        android:onClick="goToList"
+        android:src="@drawable/ic_format_list_bulleted_black_16dp"
         android:tint="@color/iconsTint" />
 
 </android.support.design.widget.CoordinatorLayout>

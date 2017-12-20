@@ -73,7 +73,7 @@ public class Helper {
 
     public static String round(float d) {
         DecimalFormat df = new DecimalFormat("#.#");
-        return df.format(d);
+        return df.format(d).replace(',', '.');
     }
 
     public static String round(float d, int decimalPlace) {
@@ -83,12 +83,20 @@ public class Helper {
         StringBuilder sb = new StringBuilder("#.");
         for (int i = 0; i < decimalPlace; i++) sb.append('#');
 
-        return new DecimalFormat(sb.toString()).format(d);
+        return new DecimalFormat(sb.toString()).format(d).replace(',', '.');
+    }
+
+    public static String formatDistance(float distance){
+        String unit = "m";
+        if(distance > 1000){
+            distance = distance/1000;
+            unit = "km";
+        }
+        return String.format("%s %s", round(distance), unit);
     }
 
     public static String buildUrlToUpdateStatus(String url, String sessionId, String status, Location location) {
-        DecimalFormat df = new DecimalFormat("#.#");
-        return String.format(Locale.ITALIAN, "%s?session_id=%s&message=%s&lat=%s&lon=%s", url, sessionId, status, df.format(location.getLatitude()), df.format(location.getLongitude()));
+        return String.format(Locale.US, "%s?session_id=%s&message=%s&lat=%s&lon=%s", url, sessionId, status, location.getLatitude(), location.getLongitude()).replace(',', '.');
     }
 
     public static String getSessionId(Activity activity) {

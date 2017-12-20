@@ -1,9 +1,6 @@
 package com.gioaudino.geopost.Entity;
 
-import android.location.Location;
-
 import com.gioaudino.geopost.Model.MyPosition;
-import com.google.android.gms.maps.model.LatLng;
 
 /**
  * Created by gioaudino on 07/12/17.
@@ -14,7 +11,7 @@ public class UserFromServer {
     private String username;
     private String msg;
     private Double lat;
-    private Double lng;
+    private Double lon;
 
     public String getUsername() {
         return username;
@@ -40,12 +37,12 @@ public class UserFromServer {
         this.lat = lat;
     }
 
-    public double getLng() {
-        return lng;
+    public double getLon() {
+        return lon;
     }
 
-    public void setLng(double lng) {
-        this.lng = lng;
+    public void setLon(double lon) {
+        this.lon = lon;
     }
 
     public User toUser() {
@@ -53,10 +50,20 @@ public class UserFromServer {
         u.setUsername(this.username);
         if (null != this.msg && this.msg.length() > 0)
             u.setMsg(this.msg);
-        if (null != this.lat && null != this.lng) {
-            u.setLocation(this.lat, this.lng);
+        if (null != this.lat && null != this.lon) {
+            u.setLocation(this.lat, this.lon);
             u.setDistance(MyPosition.getInstance().getLocation());
         }
         return u;
+    }
+
+    @Override
+    public String toString() {
+        return "UserFromServer{" +
+                "username='" + username + '\'' +
+                ", msg='" + msg + '\'' +
+                ", lat=" + lat +
+                ", lon=" + lon +
+                '}';
     }
 }

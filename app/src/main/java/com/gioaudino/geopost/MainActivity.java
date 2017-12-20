@@ -10,8 +10,11 @@ import android.widget.EditText;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.gioaudino.geopost.Model.MyPosition;
 import com.gioaudino.geopost.Service.Helper;
 import com.gioaudino.geopost.Service.LoginRequest;
+import com.gioaudino.geopost.Service.MyLocationUpdater;
+import com.google.android.gms.location.LocationServices;
 
 
 public class MainActivity extends BaseActivity {
@@ -57,6 +60,8 @@ public class MainActivity extends BaseActivity {
                     Log.d("LOGIN ACTIVITY", "REQUEST SUCCESSFUL - Token: " + response);
                     Helper.saveData(this, username, password, response);
                     spinner.setVisibility(View.INVISIBLE);
+                    new Thread(() -> MyLocationUpdater.getInstance().setup(this)).run();
+                    MyPosition.getInstance().setPositionProvider(LocationServices.getFusedLocationProviderClient(this));
                     Intent intent = new Intent(this, ListSplashActivity.class);
                     startActivity(intent);
                 },
@@ -71,4 +76,9 @@ public class MainActivity extends BaseActivity {
         queue.add(request);
     }
 
+    public void autoLogin(View view) {
+        ((EditText) this.findViewById(R.id.username)).setText("gio_user");
+        ((EditText) this.findViewById(R.id.password)).setText("giorgio");
+        this.login(view);
+    }
 }
