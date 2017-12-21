@@ -7,6 +7,9 @@ import android.location.Location;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import com.gioaudino.geopost.Model.Friends;
+import com.gioaudino.geopost.Model.MyPosition;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +52,8 @@ public class Helper {
                 .remove("password")
                 .remove("session_id")
                 .apply();
+        Friends.getInstance().clear();
+        MyPosition.getInstance().clear();
     }
 
     public static void closeKeyboard(Activity activity) {

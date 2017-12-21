@@ -35,6 +35,10 @@ public class Friends {
         return new ArrayList<>(friends.values());
     }
 
+    public void clear(){
+        this.friends = new HashMap<>();
+    }
+
     public Map<String, User> mergeUsers(List<User> users) {
         if (this.friends.size() == 0) {
             this.friends = new HashMap<>();

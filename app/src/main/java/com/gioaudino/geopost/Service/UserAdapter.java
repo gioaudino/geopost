@@ -44,7 +44,7 @@ public class UserAdapter extends ArrayAdapter<User> {
             TextView tt2 = v.findViewById(R.id.line2);
             tt1.setText(user.getUsername());
 
-            String sndLine = String.format("%s - %s", user.getMsg(), Helper.formatDistance(user.getDistance()));
+            String sndLine = String.format("%s - %s", user.getMsg(), user.getLocation() != null ? Helper.formatDistance(user.getDistance()) : "n/a");
             tt2.setText(sndLine);
         }
         return v;

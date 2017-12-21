@@ -35,6 +35,10 @@ public class MyPosition {
         Log.d("POSITION MODEL", "UPDATING DISTANCES");
     }
 
+    public void clear(){
+        this.location = null;
+    }
+
     public FusedLocationProviderClient getPositionProvider() {
         return positionProvider;
     }

@@ -105,7 +105,7 @@ public class ListActivity extends FriendsActivity {
     }
 
     private void publishList(boolean shouldShowSnackBar) {
-        setData();
+        this.setData();
         ListView listView = this.findViewById(R.id.friends_list);
         BaseAdapter adapter = (BaseAdapter) listView.getAdapter();
         if (null == adapter)
