@@ -76,32 +76,27 @@ public class Helper {
         old.addAll(values);
     }
 
-    public static String round(float d) {
-        DecimalFormat df = new DecimalFormat("#.#");
-        return df.format(d).replace(',', '.');
-    }
-
-    public static String round(float d, int decimalPlace) {
-        if (decimalPlace <= 0) return String.valueOf((int) d);
-        if (decimalPlace == 1) return round(d);
+    public static String round(float distance, int decimalPlace) {
+        if (decimalPlace <= 0) return String.valueOf((int) distance);
+        if (decimalPlace == 1) return round(distance);
 
         StringBuilder sb = new StringBuilder("#.");
         for (int i = 0; i < decimalPlace; i++) sb.append('#');
 
-        return new DecimalFormat(sb.toString()).format(d).replace(',', '.');
+        return new DecimalFormat(sb.toString()).format(distance).replace(',', '.');
     }
 
-    public static String formatDistance(float distance){
-        String unit = "m";
-        if(distance > 1000){
-            distance = distance/1000;
-            unit = "km";
-        }
-        return String.format("%s %s", round(distance), unit);
+    public static String formatDistance(float distance) {
+        return distance > 1000 ? Helper.round(distance / 1000) + " km" : ((int) distance) + " m";
+    }
+
+    private static String round(float distance) {
+        DecimalFormat df = new DecimalFormat("#.#");
+        return df.format(distance).replace(',', '.');
     }
 
     public static String buildUrlToUpdateStatus(String url, String sessionId, String status, Location location) {
-        return String.format(Locale.US, "%s?session_id=%s&message=%s&lat=%s&lon=%s", url, sessionId, status, location.getLatitude(), location.getLongitude()).replace(',', '.');
+        return String.format(Locale.US, "%s?session_id=%s&message=%s&lat=%s&lon=%s", url, sessionId, status, String.valueOf(location.getLatitude()).replace(',', '.'), String.valueOf(location.getLongitude()).replace(',', '.'));
     }
 
     public static String getSessionId(Activity activity) {

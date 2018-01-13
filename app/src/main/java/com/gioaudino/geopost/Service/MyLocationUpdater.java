@@ -79,8 +79,8 @@ public class MyLocationUpdater {
         Log.d("LOCATION UPDATER", "REQUESTING LOCATION");
         if (ContextCompat.checkSelfPermission(activity, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             this.fusedLocationClient.requestLocationUpdates(this.locationRequest, this.locationCallback, null);
-        } else
-            ActivityCompat.requestPermissions(activity, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, Values.LOCATION_PERMISSION);
+        }
+//        else ActivityCompat.requestPermissions(activity, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, Values.LOCATION_PERMISSION);
     }
 
     public void pauseLocationRequest() {

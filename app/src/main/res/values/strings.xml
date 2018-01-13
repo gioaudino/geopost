@@ -33,4 +33,8 @@
     <string name="empty_list">You are not following anybody</string>
     <string name="autologin_gio_user">AutoLogin - gio_user</string>
     <string name="title_activity_map">MapActivity</string>
+    <string name="sad_face">I\'m sad!</string>
+    <string name="no_permission">This app is supposed to have location permission in order to work properly</string>
+    <string name="grant_permission">Grant permission</string>
+    <string name="unfriendly_user">You said you don\'t want to be asked again, so I won\'t ask. But I won\'t work either without location permission so you need to go and grant them manually from settings</string>
 </resources>

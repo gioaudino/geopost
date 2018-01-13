@@ -113,7 +113,7 @@ public class MapActivity extends FriendsActivity implements OnMapReadyCallback {
             if (didSomething) {
                 LatLngBounds bounds = new LatLngBounds(new LatLng(minLat, minLon), new LatLng(maxLat, maxLon));
                 this.map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 0));
-            } else
+            } else if (null != MyPosition.getInstance().getLocation())
                 this.map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(
                         MyPosition.getInstance().getLocation().getLatitude(),
                         MyPosition.getInstance().getLocation().getLongitude()), 1));

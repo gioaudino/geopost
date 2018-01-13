@@ -13,4 +13,5 @@ public class Values {
     public static final int FETCHING_INTERVAL = 30;
     public static final int LOCATION_PERMISSION = 1;
     public static final String SESSION_ID = "session_id";
+    public static final String CALLING_ACTIVITY = "calling_activity";
 }

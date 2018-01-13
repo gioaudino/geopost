@@ -96,7 +96,8 @@ public class ProfileActivity extends BaseActivity implements OnMapReadyCallback 
     }
 
     public void goToMap(View view) {
-        Snackbar.make(findViewById(R.id.profile_coordinator), "Something happening here", Snackbar.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, MapActivity.class);
+        this.startActivity(intent);
     }
 
     public void goToList(View view) {

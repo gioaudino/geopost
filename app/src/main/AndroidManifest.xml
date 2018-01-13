@@ -28,7 +28,6 @@
             android:label="@string/title_activity_add_friend"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ListSplashActivity" />
-        <activity android:name=".MapSplashActivity" />
         <activity
             android:name=".ProfileActivity"
             android:label="@string/title_activity_profile"
@@ -45,7 +44,8 @@
         <activity
             android:name=".MapActivity"
             android:label="@string/title_activity_map"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".NoLocationActivity"></activity>
     </application>
 
 </manifest>

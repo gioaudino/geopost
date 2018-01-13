@@ -32,12 +32,13 @@ public class ListSplashActivity extends BaseActivity {
         setContentView(R.layout.activity_splash);
 
         Log.d("SPLASH ACTIVITY", "GETTING PERMISSION");
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, Values.LOCATION_PERMISSION);
-        } else {
+        this.checkLocationPermission();
+//        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, Values.LOCATION_PERMISSION);
+//        } else {
             this.permissionGranted = true;
             updateLocation();
-        }
+//        }
 
         RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest followedRequest = new StringRequest(
@@ -61,25 +62,26 @@ public class ListSplashActivity extends BaseActivity {
 
     private void startNewActivity() {
         Log.d("SPLASH ACTIVITY", "GOING - location: " + locationAvailable + ", permission: " + permissionGranted + ", followed: " + followedAvailable);
-        if (this.locationAvailable && this.permissionGranted && this.followedAvailable) {
+        if (this.locationAvailable && this.followedAvailable) {
             Intent intent = new Intent(this, ListActivity.class);
             this.startActivity(intent);
         }
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == Values.LOCATION_PERMISSION) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                this.permissionGranted = true;
-                updateLocation();
-                Log.d("LOCATION PERMISSION", "GRANTED");
-
-            } else {
-                Log.d("LOCATION PERMISSION", "DENIED");
-            }
-        }
-    }
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+////        if (requestCode == Values.LOCATION_PERMISSION) {
+////            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+////                this.permissionGranted = true;
+////                updateLocation();
+////                Log.d("LOCATION PERMISSION", "GRANTED");
+////
+////            } else {
+////                Log.d("LOCATION PERMISSION", "DENIED");
+////            }
+////        }
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//    }
 
     private void updateLocation() {
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)

@@ -2,17 +2,14 @@ package com.gioaudino.geopost;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -81,17 +78,15 @@ public class ListActivity extends FriendsActivity {
 
     private void refreshPosition() {
         Log.d("LIST ACTIVITY", "REFRESHING POSITION");
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, Values.LOCATION_PERMISSION);
-        } else {
-            MyPosition.getInstance().getPositionProvider().getLastLocation().addOnSuccessListener(
-                    location -> {
-                        MyPosition.getInstance().setLocation(location);
-                        this.positionOk = true;
-                        if (followedOk)
-                            go();
-                    });
-        }
+        this.checkLocationPermission();
+        MyPosition.getInstance().getPositionProvider().getLastLocation().addOnSuccessListener(
+                location -> {
+                    MyPosition.getInstance().setLocation(location);
+                    this.positionOk = true;
+                    if (followedOk)
+                        go();
+                });
+
     }
 
     private void go() {
@@ -140,9 +135,7 @@ public class ListActivity extends FriendsActivity {
     public void refresh(View view) {
         Log.d("LIST ACTIVITY", "REFRESH ACTION");
         Log.d("LIST ACTIVITY", "REFRESHING POSITION");
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, Values.LOCATION_PERMISSION);
-        }
+        this.checkLocationPermission();
 
         RequestQueue queue = Volley.newRequestQueue(this);
 
@@ -176,21 +169,10 @@ public class ListActivity extends FriendsActivity {
         queue.add(request);
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case Values.LOCATION_PERMISSION: {
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(this,
-                        android.Manifest.permission.ACCESS_FINE_LOCATION)
-                        != PackageManager.PERMISSION_GRANTED)
-                    Toast.makeText(this, "I need to have that permission, please!", Toast.LENGTH_LONG).show();
-                this.refreshPosition();
-
-            }
-        }
-    }
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//    }
 
     @Override
     public void addNewFriend(View view) {
