@@ -1,6 +1,5 @@
 package com.gioaudino.geopost;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
@@ -34,11 +33,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (!(this instanceof MainActivity))
             MyLocationUpdater.getInstance().requestLocation(this);
     }
-
+    
     protected void checkLocationPermission() {
-        this.checkLocationPermission(null);
-    }
-    protected void checkLocationPermission(Activity activity) {
         Log.d("BaseActivity", "CHECKING PERMISSION");
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, Values.LOCATION_PERMISSION);
@@ -48,7 +44,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
         Log.d("BASE ACTIVITY", "PERMISSION RESULT");
-        Log.d("BASE ACTIVITY", "Would go back to " + this.getClass().getSimpleName());
+        Log.d("BASE ACTIVITY", "Would go back to " + this.getClass().getCanonicalName());
         if (requestCode == Values.LOCATION_PERMISSION) {
             if (grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
                 Intent intent = new Intent(this, NoLocationActivity.class);

@@ -10,8 +10,8 @@
 
     <ListView
         android:id="@+id/friends_list"
-        android:layout_width="304dp"
-        android:layout_height="437dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginTop="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
