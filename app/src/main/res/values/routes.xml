@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="login_POST" type="string">https://ewserver.di.unimi.it/mobicomp/geopost/login</string>
+    <string name="followed_GET" type="string">https://ewserver.di.unimi.it/mobicomp/geopost/followed</string>
+    <string name="users_GET" type="string">https://ewserver.di.unimi.it/mobicomp/geopost/users</string>
+    <string name="follow_GET" type="string">https://ewserver.di.unimi.it/mobicomp/geopost/follow</string>
+    <string name="status_update_GET" type="string">https://ewserver.di.unimi.it/mobicomp/geopost/status_update</string>
+    <string name="profile_GET" type="string">https://ewserver.di.unimi.it/mobicomp/geopost/profile</string>
+    <string name="logout_GET" type="string">https://ewserver.di.unimi.it/mobicomp/geopost/logout</string>
+</resources>

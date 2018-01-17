@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/friends_list_coordinator"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.gioaudino.geopost.ListActivity">
+
+    <include layout="@layout/content_feed" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_refresh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start|bottom"
+        android:layout_margin="16dp"
+        android:onClick="refresh"
+        android:src="@drawable/ic_refresh_black_16dp"
+        android:tint="@color/iconsTint" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_update_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:layout_marginBottom="75dp"
+        android:onClick="updateStatus"
+        android:src="@drawable/ic_message_black_16dp"
+        android:tint="@color/iconsTint"
+        app:layout_anchor="@id/fab_refresh"
+        app:layout_anchorGravity="top|end" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:layout_marginBottom="75dp"
+        android:onClick="addNewFriend"
+        android:src="@drawable/ic_person_add_black_16dp"
+        android:tint="@color/iconsTint"
+        app:layout_anchor="@id/fab_map"
+        app:layout_anchorGravity="top|end" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:layout_marginBottom="135dp"
+        android:onClick="goToProfile"
+        android:src="@drawable/ic_perm_identity_black_16dp"
+        android:tint="@color/iconsTint"
+        app:layout_anchor="@id/fab_add"
+        app:layout_anchorGravity="top|end" />
+
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_map"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:onClick="goToMap"
+        android:src="@drawable/ic_map_black_16dp"
+        android:tint="@color/iconsTint" />
+
+</android.support.design.widget.CoordinatorLayout>
