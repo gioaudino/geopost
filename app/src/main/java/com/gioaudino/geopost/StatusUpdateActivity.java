@@ -27,8 +27,6 @@ import java.net.URLEncoder;
 
 public class StatusUpdateActivity extends BaseActivity implements OnMapReadyCallback {
 
-    private GoogleMap map;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,21 +102,13 @@ public class StatusUpdateActivity extends BaseActivity implements OnMapReadyCall
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        this.map = googleMap;
         this.checkLocationPermission();
         Location myPos = MyPosition.getInstance().getLocation();
         LatLng latLng = new LatLng(myPos.getLatitude(), myPos.getLongitude());
-        this.map.addMarker(new MarkerOptions().position(latLng).title("You are here"));
-        this.map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
+        googleMap.addMarker(new MarkerOptions().position(latLng).title("You are here"));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
         this.findViewById(R.id.button_update).setEnabled(true);
         this.findViewById(R.id.update_progress).setVisibility(View.INVISIBLE);
     }
 
-
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-//        if (requestCode == Values.LOCATION_PERMISSION && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-//            performRequest();
-//        else Log.e("STATUS UPDATE", "OH COME ON");
-//    }
 }

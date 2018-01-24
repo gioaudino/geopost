@@ -58,12 +58,40 @@
         android:textStyle="bold"
         android:visibility="invisible" />
 
-    <Button
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/autologin_gio_user"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:onClick="autoLogin"/>
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/al_1"
+            android:layout_width="75dp"
+            android:layout_marginStart="10dp"
+            android:layout_height="wrap_content"
+            android:text="@string/al_1"
+            android:onClick="autoLogin"/>
+
+        <Button
+            android:id="@+id/al_2"
+            android:layout_width="75dp"
+            android:layout_height="wrap_content"
+            android:text="@string/al_2"
+            android:onClick="autoLogin"/>
+
+        <Button
+            android:id="@+id/al_3"
+            android:layout_width="75dp"
+            android:layout_height="wrap_content"
+            android:text="@string/al_3"
+            android:onClick="autoLogin"/>
+
+        <Button
+            android:id="@+id/al_4"
+            android:layout_width="75dp"
+            android:layout_height="wrap_content"
+            android:text="@string/al_4"
+            android:onClick="autoLogin" />
+    </LinearLayout>
+
 
 </LinearLayout>

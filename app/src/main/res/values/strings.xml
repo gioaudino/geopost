@@ -20,21 +20,25 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-    <string name="title_activity_add_friend">Follow user</string>
+    <string name="title_activity_add_friend"> </string>
     <string name="username_label">Username</string>
     <string name="add_new_friend">Add new friend</string>
     <string name="error_network_fetching">There\'s no user with such prefix</string>
-    <string name="title_activity_profile">ProfileActivity</string>
-    <string name="title_activity_status_update">StatusUpdateActivity</string>
+    <string name="title_activity_profile">My profile</string>
+    <string name="title_activity_status_update">Update status</string>
     <string name="status_update">Update your status</string>
     <string name="status_type">Type your new status</string>
     <string name="update">Update</string>
     <string name="last_status">Last status sent</string>
     <string name="empty_list">You are not following anybody</string>
     <string name="autologin_gio_user">AutoLogin - gio_user</string>
-    <string name="title_activity_map">MapActivity</string>
+    <string name="title_activity_map">Where are my friends?</string>
     <string name="sad_face">I\'m sad!</string>
     <string name="no_permission">This app is supposed to have location permission in order to work properly</string>
     <string name="grant_permission">Grant permission</string>
     <string name="unfriendly_user">You said you don\'t want to be asked again, so I won\'t ask. But I won\'t work either without location permission so you need to go and grant them manually from settings</string>
+    <string name="al_1">AL-1</string>
+    <string name="al_2">AL-2</string>
+    <string name="al_3">AL-3</string>
+    <string name="al_4">AL-4</string>
 </resources>

@@ -169,11 +169,6 @@ public class ListActivity extends FriendsActivity {
         queue.add(request);
     }
 
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], int[] grantResults) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-//    }
-
     @Override
     public void addNewFriend(View view) {
         super.addNewFriend(view);

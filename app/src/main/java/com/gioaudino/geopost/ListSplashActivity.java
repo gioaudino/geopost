@@ -7,6 +7,8 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -29,6 +31,8 @@ public class ListSplashActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         Log.d("SPLASH ACTIVITY", "OnCreate");
         super.onCreate(savedInstanceState);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash);
 
         Log.d("SPLASH ACTIVITY", "GETTING PERMISSION");
@@ -68,20 +72,6 @@ public class ListSplashActivity extends BaseActivity {
         }
     }
 
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-////        if (requestCode == Values.LOCATION_PERMISSION) {
-////            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-////                this.permissionGranted = true;
-////                updateLocation();
-////                Log.d("LOCATION PERMISSION", "GRANTED");
-////
-////            } else {
-////                Log.d("LOCATION PERMISSION", "DENIED");
-////            }
-////        }
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-//    }
 
     private void updateLocation() {
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)

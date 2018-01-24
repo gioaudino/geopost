@@ -112,7 +112,7 @@ public class MapActivity extends FriendsActivity implements OnMapReadyCallback {
             }
             if (didSomething) {
                 LatLngBounds bounds = new LatLngBounds(new LatLng(minLat, minLon), new LatLng(maxLat, maxLon));
-                this.map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 0));
+                this.map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 50));
             } else if (null != MyPosition.getInstance().getLocation())
                 this.map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(
                         MyPosition.getInstance().getLocation().getLatitude(),
@@ -126,6 +126,9 @@ public class MapActivity extends FriendsActivity implements OnMapReadyCallback {
 
     public void refresh(View view) {
         this.updateFollowed();
+        if (Friends.getInstance().getFriends().size() > 0) {
+            Snackbar.make(this.findViewById(R.id.map_coordinator), "Friend list, their position and your position have been updated", Snackbar.LENGTH_LONG).show();
+        }
     }
 
     @Override

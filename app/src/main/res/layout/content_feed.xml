@@ -9,6 +9,8 @@
     tools:showIn="@layout/activity_feed">
 
     <ListView
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:id="@+id/friends_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

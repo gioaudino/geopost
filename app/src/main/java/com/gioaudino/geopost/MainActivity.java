@@ -77,7 +77,22 @@ public class MainActivity extends BaseActivity {
     }
 
     public void autoLogin(View view) {
-        ((EditText) this.findViewById(R.id.username)).setText("gio_user");
+        int user = 0;
+        switch (view.getId()) {
+            case R.id.al_1:
+                user = 1;
+                break;
+            case R.id.al_2:
+                user = 2;
+                break;
+            case R.id.al_3:
+                user = 3;
+                break;
+            case R.id.al_4:
+                user = 4;
+                break;
+        }
+        ((EditText) this.findViewById(R.id.username)).setText("886853_test" + user);
         ((EditText) this.findViewById(R.id.password)).setText("giorgio");
         this.login(view);
     }
